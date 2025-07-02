@@ -46,3 +46,6 @@ VITE_BACKEND_URL=https://todo-backend-e14k.onrender.com
 **4.Start the app:**
 npm run dev
 
+
+   **This project is a part of a hackathon run by https://www.katomaran.com**
+
