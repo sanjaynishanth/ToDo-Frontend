@@ -8,7 +8,7 @@ const CompletedTasks = () => {
 
   const fetchCompletedTasks = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/tasks', {
+      const res = await fetch('https://todo-backend-e14k.onrender.com/api/tasks', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();

@@ -21,19 +21,20 @@ const TaskList = ({ token, statusFilter, setStatusFilter, priorityFilter, setPri
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/tasks', {
+                const res = await fetch('https://todo-backend-e14k.onrender.com/api/tasks', {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const data = await res.json();
                 setTasks(data);
-            } catch (err) {
+            }
+            catch (err) {
                 console.error('Error fetching tasks:', err);
             }
         };
 
         if (token) fetchTasks();
 
-        const socket = io('http://localhost:5000');
+        const socket = io('https://todo-backend-e14k.onrender.com');
         socket.on('taskCreated', (task) => setTasks((prev) => [task, ...prev]));
         socket.on('taskUpdated', (updated) =>
             setTasks((prev) =>

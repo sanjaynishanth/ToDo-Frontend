@@ -18,11 +18,12 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/user/me', {
+      const res = await fetch('https://todo-backend-e14k.onrender.com/api/user/me', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
 
       const data = await res.json();
       setUser(data);
