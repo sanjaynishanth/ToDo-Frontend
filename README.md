@@ -4,7 +4,7 @@
 
 This is the **frontend** of a full-stack collaborative Todo app built with **React**, **Tailwind CSS**, and **Socket.io** for real-time collaboration.
 
-🔗 **Live Demo**: https://your-frontend.onrender.com](https://todo-frontend-kotomaran.netlify.app  
+🔗 **Live Demo**: https://todo-frontend-kotomaran.netlify.app  
 🔗 **Backend Repo**: https://github.com/sanjaynishanth/todo-backend  
 🔗 **Backend Deployment**: https://todo-backend-e14k.onrender.com
 
@@ -33,17 +33,13 @@ This is the **frontend** of a full-stack collaborative Todo app built with **Rea
 **project setup**
 
 **1. Clone the repo:**
-   git clone https://github.com/your-username/todo-frontend.git
+   git clone https://github.com/sanjaynishanth/todo-frontend.git
    cd todo-frontend
 
 **2.Install dependencies:**
 npm install
 
-**3.Create .env file:**
-VITE_BACKEND_URL=https://todo-backend-e14k.onrender.com
-
-
-**4.Start the app:**
+**3.Start the app:**
 npm run dev
 
 
