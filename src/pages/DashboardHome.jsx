@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CalendarDays, Plus } from 'lucide-react';
-import AddTaskModal from '../componenets/AddTaskModal';
-import Sidebar from '../componenets/Sidebar';
+import AddTaskModal from "../components/AddTaskModal";
+import Sidebar from '../components/Sidebar';
 import { AuthContext } from '../context/AuthContext';
 import { io } from 'socket.io-client';
 import { Calendar } from 'primereact/calendar';
 import "primereact/resources/themes/lara-light-cyan/theme.css"; 
 import "primereact/resources/primereact.min.css"; 
-import RightCalendarPanel from '../componenets/RightCalendarPanel';
+import RightCalendarPanel from '../components/RightCalendarPanel';
 
 const DashboardHome = () => {
   const { token, user } = useContext(AuthContext);
