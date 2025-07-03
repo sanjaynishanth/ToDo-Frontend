@@ -1,10 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, CalendarDays, Plus } from 'lucide-react';
-import AddTaskModal from '../components/AddTaskModal';
-import Sidebar from '../components/Sidebar';
+import AddTaskModal from '../componenets/AddTaskModal';
+import Sidebar from '../componenets/Sidebar';
 import { AuthContext } from '../context/AuthContext';
 import { io } from 'socket.io-client';
+import { Calendar } from 'primereact/calendar';
+import "primereact/resources/themes/lara-light-cyan/theme.css"; 
+import "primereact/resources/primereact.min.css"; 
+import RightCalendarPanel from '../componenets/RightCalendarPanel';
 
 const DashboardHome = () => {
   const { token, user } = useContext(AuthContext);
@@ -12,6 +16,7 @@ const DashboardHome = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [calendarDate, setCalendarDate] = useState(null); 
 
   const handleAddTask = async (form) => {
     try {
@@ -173,9 +178,15 @@ const DashboardHome = () => {
     <div className="flex min-h-screen bg-gray-50 font-[Poppins]">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden relative">
+
+        {/* Mobile-specific Greeting (appears above search bar on small screens) */}
+        <h2 className="md:hidden text-xl sm:text-2xl font-semibold text-[#2B455C] text-center mt-6 px-4">
+          👋 Back to work,{' '}
+          <span className="capitalize">{user?.email?.split('@')[0] || 'User'}</span>!
+        </h2>
+
         {/* Floating Header */}
-        {/* Adjusted for mobile: top-4 for smaller screens, full-width, smaller padding */}
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl bg-[#F0FCFF] p-3 md:p-4 rounded-2xl shadow-lg font-[Poppins]">
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl bg-[#F0FCFF] p-3 md:p-4 mt-12 md:mt-0 rounded-2xl shadow-lg font-[Poppins]">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 flex-wrap">
             {/* Search */}
             <div className="flex items-center gap-2 flex-1 bg-white border border-gray-300 px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto">
@@ -189,16 +200,8 @@ const DashboardHome = () => {
               />
             </div>
 
-            {/* Calendar + Add */}
-            {/* Adjusted for mobile: moved buttons to align better, smaller gap */}
+            {/* Add Task Button Only */}
             <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-              <button
-                onClick={() => setShowCalendar((prev) => !prev)}
-                className="p-2 rounded-full bg-[#C3F4FD] text-[#2B455C] hover:bg-[#A5EEFD] transition-all"
-                title="Toggle calendar"
-              >
-                <CalendarDays className="w-5 h-5" />
-              </button>
               <button
                 className="flex items-center gap-2 bg-[#A5EEFD] text-[#2B455C] px-3 py-1.5 sm:px-4 sm:py-2 rounded-full font-semibold shadow hover:bg-[#C3F4FD] transition-colors text-sm sm:text-base"
                 onClick={() => setIsModalOpen(true)}
@@ -208,35 +211,19 @@ const DashboardHome = () => {
               </button>
             </div>
           </div>
-
-          <AnimatePresence>
-            {showCalendar && (
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                // Adjusted for mobile: closer to the right edge, slightly smaller
-                className="absolute right-4 top-[80px] sm:top-[90px] z-40 bg-white p-3 sm:p-4 rounded-lg shadow-xl border border-gray-200"
-              >
-                <p className="text-xs sm:text-sm text-gray-500">📅 Calendar placeholder</p>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
 
         {/* Main Section */}
         {/* Adjusted for mobile: increased padding-top, removed max-w-6xl for full width on small screens, smaller horizontal padding */}
-        <div className="pt-[110px] px-4 md:px-8 mx-auto space-y-8 pb-20 w-full sm:max-w-6xl">
-          {/* Greeting */}
-          {/* Adjusted for mobile: smaller font size */}
-          <h2 className="text-xl sm:text-2xl font-semibold text-[#2B455C] text-center md:text-left">
+        <div className="pt-[110px] md:pt-[110px] px- md:px-7 mx-auto space-y-8 pb-20 w-full sm:max-w-6xl">
+          {/* Desktop-specific Greeting */}
+          <h2 className="hidden md:block text-xl sm:text-2xl font-semibold text-[#2B455C] text-center md:text-left">
             👋 Back to work,{' '}
             <span className="capitalize">{user?.email?.split('@')[0] || 'User'}</span>!
           </h2>
 
           {/* Status Summary with Progress Circles */}
-          {/* Adjusted for mobile: stacked vertically by default, then wrap */}
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-4 sm:gap-6">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center md:justify-start gap-4 sm:gap-6 mt-4 md:mt-0"> {/* Added mt-4 for mobile */}
             <div className="px-5 py-3 sm:px-6 sm:py-4 rounded-xl shadow bg-white text-sm text-[#2B455C] w-full sm:w-auto flex items-center gap-3 sm:gap-4">
               {renderCircularProgress(completionPercentage, 'text-green-500')}
               <div>
@@ -265,7 +252,6 @@ const DashboardHome = () => {
             <h3 className="text-lg sm:text-xl font-semibold text-[#2B455C] mb-3">
               📅 Today's Projects
             </h3>
-            {/* Adjusted for mobile: removed overflow-x-auto, changed to grid for better stacking on small screens */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {todayTasks.slice(0, 4).map((task) => (
                 <div
@@ -320,11 +306,10 @@ const DashboardHome = () => {
           </div>
 
           {/* Upcoming Projects */}
-          <div className="space-y-3 sm:space-y-0">
+          <div className="space-y-3 sm:space-y-0 max-w-3xl">
             <h3 className="text-lg sm:text-xl font-semibold text-[#2B455C] mb-3">
               🔜 Upcoming Projects
             </h3>
-            {/* Adjusted for mobile: using grid for better stacking */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {upcomingTasks.slice(0, 2).map((task) => (
                 <div
@@ -370,6 +355,9 @@ const DashboardHome = () => {
             </div>
           </div>
         </div>
+        <RightCalendarPanel tasks={tasks} />
+
+
 
         {/* Add Task Modal */}
         <AddTaskModal
