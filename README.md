@@ -4,7 +4,8 @@
 
 This is the **frontend** of a full-stack collaborative Todo app built with **React**, **Tailwind CSS**, and **Socket.io** for real-time collaboration.
 
-🔗 **Live Demo**: https://todo-frontend-kotomaran.netlify.app  
+🔗 **Loom Video & Architecture**:[https://todo-frontend-kotomaran.netlify.app]-https://drive.google.com/drive/folders/15VtBaiK3msXrZYsDYXu96OOTQ4z9wBTN?usp=sharing
+🔗 **Live Demo**: https://todo-frontend-kotomaran.netlify.app 
 🔗 **Backend Repo**: https://github.com/sanjaynishanth/todo-backend  
 🔗 **Backend Deployment**: https://todo-backend-e14k.onrender.com
 
